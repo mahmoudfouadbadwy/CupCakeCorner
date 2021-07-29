@@ -40,7 +40,7 @@ struct ContentView: View {
                 }
                 
                 Section {
-                    NavigationLink(destination: Text("Address")) {
+                    NavigationLink(destination: AddressView(order: order)) {
                         Text("Delivery details")
                     }
                 }
