@@ -13,9 +13,9 @@ class Order: ObservableObject, Codable {
     @Published var quantity = 3
     @Published var specialRequestEnabled = false {
         didSet {
-            if !oldValue {
-                extraFrosting = !oldValue
-                addSprinkles = !oldValue
+            if !specialRequestEnabled {
+                extraFrosting = false
+                addSprinkles = false
             }
         }
     }
