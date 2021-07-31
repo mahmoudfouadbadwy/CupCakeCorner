@@ -41,28 +41,11 @@ struct CheckoutView: View {
     }
     
     private func placeOrder() {
-        guard let encoded = try? JSONEncoder().encode(order) else  {
-            print("Failed to encode ...")
-            return}
-        guard let url = URL(string: "https://reqres.in/api/cupcakes") else  { return }
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "Post"
-        request.httpBody = encoded
-        
-        URLSession.shared.dataTask(with: request) {
-            data, response, error in
-            
-            guard let data = data else { return }
-            
-            if let decoderData = try? JSONDecoder().decode(Order.self, from: data) {
-                self.confirmationMessage = "Your order for \(decoderData.quantity)x \(order.type.text.lowercased()) cupcakes is on its way"
-                self.showingConfirmation = true
-            } else {
-                print("Invalid response from server ")
-            }
-            
-        }.resume()
+        Network().makeRequest(with: "https://reqres.in/api/cupcakes",
+                              order: order) {
+            self.confirmationMessage = "Your order for \($0.quantity)x \($0.type.text.lowercased()) cupcakes is on its way"
+            self.showingConfirmation = true
+        }
     }
 }
 
