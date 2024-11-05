@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var order = Order()
+    @StateObject var order = Order()
+    
     var body: some View {
         NavigationView {
             Form {
                 Section {
                     Picker("Select your cake type", selection: $order.type) {
-                        ForEach(Type.allCases, id:  \.self) {
+                        ForEach(CakeType.allCases, id:  \.self) {
                             Text($0.text)
                         }
                     }

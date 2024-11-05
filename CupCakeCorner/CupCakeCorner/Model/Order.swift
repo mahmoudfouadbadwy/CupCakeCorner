@@ -9,7 +9,7 @@ import SwiftUI
 
 class Order: ObservableObject, Codable {
     
-    @Published var type = Type.vanilla
+    @Published var type = CakeType.vanilla
     @Published var quantity = 3
     @Published var specialRequestEnabled = false {
         didSet {
@@ -59,7 +59,7 @@ class Order: ObservableObject, Codable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = Type(rawValue: try container.decode(Int.self, forKey: .type)) ?? Type.vanilla
+        type = CakeType(rawValue: try container.decode(Int.self, forKey: .type)) ?? CakeType.vanilla
         quantity = try container.decode(Int.self, forKey: .quantity)
         extraFrosting = try container.decode(Bool.self, forKey: .extraFrosting)
         addSprinkles = try container.decode(Bool.self, forKey: .addSprinkles)
@@ -87,7 +87,7 @@ class Order: ObservableObject, Codable {
 }
 
 
-enum Type: Int, CaseIterable {
+enum CakeType: Int, CaseIterable {
     case vanilla = 0
     case strawberry
     case chooclate
